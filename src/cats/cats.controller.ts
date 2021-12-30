@@ -17,6 +17,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { PoliciesGuard } from 'src/casl/policies.guard';
 import { CatsService } from './cats.service';
 import { CreateCatDTO } from './dto/cat.dto';
 import { UpdateCatDTO } from './dto/update-hotel.dto';

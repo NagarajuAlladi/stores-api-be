@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+import { CaslModule } from 'src/casl/casl.module';
 import { DatabaseModule } from 'src/database/database.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
@@ -18,6 +19,7 @@ import { UserRepository } from './user.repository';
       },
     }),
     DatabaseModule,
+    CaslModule,
   ],
   controllers: [AuthController],
   providers: [...authProviders, AuthService, UserRepository, AuthStrategy],

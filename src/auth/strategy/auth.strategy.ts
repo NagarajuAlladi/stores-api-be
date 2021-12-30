@@ -1,7 +1,7 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Model } from 'mongoose';
-import { Strategy } from 'passport-jwt';
+import { Strategy, ExtractJwt } from 'passport-jwt';
 import { JwtPayload } from '../interface/jwt-payload.interface';
 import { User } from '../interface/user.interface';
 
@@ -13,6 +13,7 @@ export class AuthStrategy extends PassportStrategy(Strategy) {
         if (!req || !req.cookies) return null;
         console.log(req.cookies);
         return req.cookies['access_token'];
+        // jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       },
       ignoreExpiration: false,
       secretOrKey: 'SECRET',

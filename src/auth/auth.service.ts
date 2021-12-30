@@ -52,9 +52,11 @@ export class AuthService {
       username: user.username,
       email: user.email,
       password: user.password,
+      isAdmin: user.isAdmin,
     };
 
     const accessToken = await this.jwtService.sign(payload);
+    console.log('token is ', accessToken);
     return accessToken;
   }
 }
