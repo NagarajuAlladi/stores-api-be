@@ -6,11 +6,11 @@ export class CreateCatDTO {
     description: 'The name of the cat',
     default: '',
   })
-  readonly name: string;
+  name: string;
   @ApiProperty({
     type: Number,
     description: 'The age of the cat',
-    default: '',
+    default: 1,
   })
   readonly age: number;
   @ApiProperty({
@@ -18,5 +18,5 @@ export class CreateCatDTO {
     description: 'The breed of the cat',
     default: '',
   })
-  readonly breed: string;
+  breed: string;
 }

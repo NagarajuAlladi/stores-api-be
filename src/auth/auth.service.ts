@@ -56,7 +56,13 @@ export class AuthService {
     };
 
     const accessToken = await this.jwtService.sign(payload);
-    console.log('token is ', accessToken);
+    // console.log('token is ', accessToken);
     return accessToken;
+  }
+
+  async findOne(email: string): Promise<User> {
+    const user = this.authModel.findOne({ email });
+
+    return user.select({ password: 0 });
   }
 }
