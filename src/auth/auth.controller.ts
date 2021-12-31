@@ -3,7 +3,9 @@ import {
   Controller,
   Get,
   Post,
+  Req,
   Res,
+  UnauthorizedException,
   ValidationPipe,
 } from '@nestjs/common';
 import {
@@ -11,14 +13,14 @@ import {
   ApiForbiddenResponse,
   ApiOkResponse,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { AuthCredentials } from './dto/auth-credential.dto';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { User } from './interface/user.interface';
-import { Response } from 'express';
-
+import { Response, Request } from 'express';
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
@@ -54,5 +56,31 @@ export class AuthController {
       .send(token);
 
     return token;
+  }
+
+  @Get('/cookies')
+  findAll(@Req() request: Request) {
+    // console.log(request.cookies);
+    console.log(request.cookies['access_token']);
+    // console.log(request.signedCookies);
+  }
+
+  @Get('/user')
+  @ApiOkResponse({ description: 'User verified Successfully' })
+  @ApiUnauthorizedResponse({ description: 'Unauthorised User' })
+  async user(@Req() request: Request) {
+    // console.log(request.cookies)
+    const cookies = request.cookies['access_token'];
+    // console.log('cookies:', cookies);
+
+    const data = await this.jwtService.verifyAsync(cookies);
+    // console.log('data:', data);
+
+    if (!data) {
+      throw new UnauthorizedException();
+    }
+    const user = await this.authService.findOne(data.email);
+
+    return user;
   }
 }

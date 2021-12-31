@@ -28,6 +28,7 @@ import { GetFilterDto } from './filters/get-filter.dto';
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   @ApiCreatedResponse({ description: 'this response has created successfully' })
   @ApiForbiddenResponse({ description: 'Forbidden' })
@@ -35,8 +36,8 @@ export class CatsController {
     return this.catsService.create(createCatDto);
   }
 
-  @Get()
   @UseGuards(JwtAuthGuard)
+  @Get()
   @ApiOkResponse({
     description: 'This resource list has been successfully returned',
   })

@@ -6,14 +6,14 @@ import { DatabaseModule } from 'src/database/database.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { authProviders } from './provider/auth.provider';
-import { AuthStrategy } from './strategy/auth.strategy';
+import { JwtStrategy } from './strategy/jwt.strategy';
 import { UserRepository } from './user.repository';
 
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
-      secret: 'SECRET',
+      secret: 'abcdefghijklmnopsdsdbsb',
       signOptions: {
         expiresIn: 60000,
       },
@@ -22,7 +22,7 @@ import { UserRepository } from './user.repository';
     CaslModule,
   ],
   controllers: [AuthController],
-  providers: [...authProviders, AuthService, UserRepository, AuthStrategy],
-  exports: [PassportModule],
+  providers: [...authProviders, AuthService, UserRepository, JwtStrategy],
+  exports: [JwtStrategy, PassportModule],
 })
 export class AuthModule {}
